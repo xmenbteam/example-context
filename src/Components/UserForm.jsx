@@ -1,9 +1,13 @@
 import { useContext, useState } from "react";
-import { User } from "../Context/UserProvider";
+import { User } from "../Contexts/UserContext/UserProvider";
+import { ThemeContext } from "../Contexts/ThemeContext/ThemeProvider";
+import { Button } from "../StyledComponents/Button";
 
 export const UserForm = () => {
-  const { dispatch, state } = useContext(User);
-  const { isLoggedIn } = state;
+  const { dispatch, state: userState } = useContext(User);
+  const { state: themeState } = useContext(ThemeContext);
+  const { isLoggedIn } = userState;
+  const { theme } = themeState;
   const [localUser, setLocalUser] = useState("");
 
   const handleSubmit = (e) => {
@@ -22,7 +26,9 @@ export const UserForm = () => {
           value={localUser}
           placeholder="What's your username?"
         />
-        <button>{isLoggedIn ? "Log Out" : "Log In"}</button>
+        <Button primary theme={theme}>
+          {isLoggedIn ? "Log Out" : "Log In"}
+        </Button>
       </form>
     </>
   );
