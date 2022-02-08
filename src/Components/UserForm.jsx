@@ -2,13 +2,16 @@ import { useContext, useState } from "react";
 import { User } from "../Context/UserProvider";
 
 export const UserForm = () => {
-  const { dispatch } = useContext(User);
-
+  const { dispatch, state } = useContext(User);
+  const { isLoggedIn } = state;
   const [localUser, setLocalUser] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch({ type: "user", value: localUser });
+    isLoggedIn
+      ? dispatch({ type: "logout" })
+      : dispatch({ type: "login", value: localUser });
+    setLocalUser("");
   };
 
   return (
@@ -19,7 +22,7 @@ export const UserForm = () => {
           value={localUser}
           placeholder="What's your username?"
         />
-        <button>Submit</button>
+        <button>{isLoggedIn ? "Log Out" : "Log In"}</button>
       </form>
     </>
   );

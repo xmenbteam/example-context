@@ -5,11 +5,11 @@ import { User } from "./Context/UserProvider";
 
 function App() {
   const { state } = useContext(User);
-  const { user } = state;
+  const { user, isLoggedIn } = state;
 
   return (
     <div className="App">
-      <h1>Hello, {user}!</h1>
+      {isLoggedIn ? <h1>Hello, {user}!</h1> : <h1>Hello, Stranger!</h1>}
       <UserForm />
     </div>
   );
